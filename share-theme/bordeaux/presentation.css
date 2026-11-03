@@ -1,0 +1,35 @@
+/* ================================================================
+   BURINFORT SA — Logo dans l'en-tête
+   ================================================================ */
+
+/* Barre de titre — hauteur fixe pour éviter l'expansion par le logo */
+.share-header-title,
+.alfresco-header-LicenseWarning {
+   height: 52px !important;
+   min-height: 52px !important;
+   max-height: 52px !important;
+   overflow: hidden !important;
+}
+
+/* Conteneur du logo : affiche le logo BURINFORT SA en background */
+.alfresco-logo-Logo,
+.alfresco-logo-only {
+   background-image: url(images/logo.jpg) !important;
+   background-size: contain !important;
+   background-repeat: no-repeat !important;
+   background-position: center left !important;
+   width: 130px !important;
+   min-width: 130px !important;
+   height: 36px !important;
+   max-height: 36px !important;
+   overflow: hidden !important;
+   display: block !important;
+   flex-shrink: 0 !important;
+}
+
+/* Masquer l'image Alfresco d'origine */
+img.alfresco-logo-logo,
+.alfresco-logo-Logo img,
+.alfresco-logo-only img {
+   display: none !important;
+}

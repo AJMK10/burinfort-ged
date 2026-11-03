@@ -1,0 +1,9 @@
+<webscript>
+   <shortname>Mes collègues</shortname>
+   <description>Affiche tous les membres des sites auxquels l'utilisateur appartient.</description>
+   <url>/components/dashlets/site-colleagues</url>
+   <format default="html" />
+   <authentication>user</authentication>
+   <transaction>none</transaction>
+   <family>user-dashlet</family>
+</webscript>

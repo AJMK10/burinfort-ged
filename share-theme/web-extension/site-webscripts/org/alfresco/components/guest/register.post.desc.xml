@@ -1,0 +1,9 @@
+<webscript>
+   <shortname>Register User</shortname>
+   <description>Server-side self-registration: proxies user creation to Alfresco repo using declared admin credentials.</description>
+   <url>/components/guest/register</url>
+   <format default="json" />
+   <authentication>none</authentication>
+   <transaction>none</transaction>
+   <family>BURINFORT GED</family>
+</webscript>

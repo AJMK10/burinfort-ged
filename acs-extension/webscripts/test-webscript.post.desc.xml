@@ -1,0 +1,6 @@
+<webscript>
+  <shortname>Test</shortname>
+  <url>/test/rootobjects</url>
+  <format default="json" />
+  <authentication>admin</authentication>
+</webscript>

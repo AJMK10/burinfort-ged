@@ -1,0 +1,8 @@
+<webscript>
+   <shortname>Welcome Email</shortname>
+   <description>Sends a welcome email to a newly registered user.</description>
+   <url>/burinfort/register/welcome-email</url>
+   <format default="json" />
+   <authentication>admin</authentication>
+   <transaction>required</transaction>
+</webscript>

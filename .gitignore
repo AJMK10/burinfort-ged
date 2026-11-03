@@ -1,0 +1,22 @@
+# Credentials — never commit
+.env
+*.env.local
+
+# Docker build cache
+**/__pycache__/
+**/node_modules/
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# aaPanel/server generated
+deploy/*.pid

@@ -1,0 +1,9 @@
+<webscript>
+   <shortname>Utilisateurs inscrits</shortname>
+   <description>Récapitulatif des utilisateurs inscrits et leur statut d'attribution aux groupes.</description>
+   <url>/components/dashlets/pending-users</url>
+   <format default="html" />
+   <authentication>user</authentication>
+   <transaction>none</transaction>
+   <family>user-dashlet</family>
+</webscript>

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<theme>
+   <title>Bordeaux Theme</title>
+   <title-id>theme.bordeaux</title-id>
+   <css-tokens>
+      <less-variables>
+         @dashlet-background: #fff;
+         @dashlet-border: 1px solid #e5e7eb;
+         @dashlet-border-radius: 12px 12px 0 0;
+         @dashlet-title-background: #fff;
+         @dashlet-title-border-bottom: 1px solid #f3f4f6;
+         @dashlet-title-border-radius: 12px 12px 0 0;
+         @dashlet-title-color: #111827;
+         @dashlet-toolbar-background: transparent;
+         @dashlet-toolbar-border-bottom: 1px solid #e5e7eb;
+         @dashlet-body-background: #fff;
+         @dashlet-body-border-radius: 0;
+
+         @use-legacy-buttons: false;
+
+      </less-variables>
+   </css-tokens>
+</theme>

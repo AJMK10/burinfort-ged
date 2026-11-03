@@ -1,0 +1,5 @@
+<webscript>
+   <shortname>Register</shortname>
+   <description>Self-registration form for BURINFORT GED</description>
+   <url>/components/guest/register</url>
+</webscript>

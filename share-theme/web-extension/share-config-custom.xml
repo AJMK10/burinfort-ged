@@ -1,0 +1,270 @@
+<alfresco-config>
+
+   <!-- Global config section -->
+   <config replace="true">
+      <flags>
+         <client-debug>false</client-debug>
+         <client-debug-autologging>false</client-debug-autologging>
+      </flags>
+   </config>
+
+   <config evaluator="string-compare" condition="WebFramework">
+      <web-framework>
+         <autowire>
+            <mode>production</mode>
+         </autowire>
+         <module-deployment>
+            <mode>manual</mode>
+            <enable-auto-deploy-modules>true</enable-auto-deploy-modules>
+         </module-deployment>
+         <!-- Activate bordeaux custom theme -->
+         <defaults>
+            <theme-id>bordeaux</theme-id>
+         </defaults>
+      </web-framework>
+   </config>
+
+   <config evaluator="string-compare" condition="CSRFPolicy" replace="false">
+      <properties>
+         <token>Alfresco-CSRFToken</token>
+         <!--
+            These two tags are replaced by substituter.sh with CSRF_FILTER_REFERER / CSRF_FILTER_ORIGIN
+         -->
+         <referer></referer>
+         <origin></origin>
+      </properties>
+      <client>
+         <cookie>{token}</cookie>
+         <header>{token}</header>
+         <parameter>{token}</parameter>
+      </client>
+      <filter>
+         <rule>
+            <request>
+               <path>/proxy/alfresco/remoteadm/.*</path>
+            </request>
+            <action name="throwError">
+               <param name="message">It is not allowed to access this url from your browser</param>
+            </action>
+         </rule>
+         <rule>
+            <request>
+               <method>POST</method>
+               <path>/proxy/alfresco/api/publishing/channels/.+</path>
+            </request>
+            <action name="assertReferer">
+               <param name="referer">{referer}</param>
+            </action>
+            <action name="assertOrigin">
+               <param name="origin">{origin}</param>
+            </action>
+         </rule>
+         <rule>
+            <request>
+               <method>POST</method>
+               <path>
+                  /page/caches/dependency/clear|/page/index|/page/surfBugStatus|/page/modules/deploy|/page/modules/module|/page/api/javascript/debugger|/page/console
+               </path>
+            </request>
+            <action name="assertReferer">
+               <param name="referer">{referer}</param>
+            </action>
+            <action name="assertOrigin">
+               <param name="origin">{origin}</param>
+            </action>
+         </rule>
+         <!-- Self-registration — guest POST, no CSRF token needed -->
+         <rule>
+            <request>
+               <method>POST</method>
+               <path>/service/components/guest/register</path>
+            </request>
+         </rule>
+         <!-- Forgot password — guest POST, no CSRF token needed -->
+         <rule>
+            <request>
+               <method>POST</method>
+               <path>/service/components/guest/forgot-password</path>
+            </request>
+         </rule>
+         <!-- Reset password — guest POST, no CSRF token needed -->
+         <rule>
+            <request>
+               <method>POST</method>
+               <path>/service/components/guest/reset-password</path>
+            </request>
+         </rule>
+
+         <!-- Login POST does NOT require a CSRF token -->
+         <rule>
+            <request>
+               <method>POST</method>
+               <path>
+                  /page/dologin(\?.+)?|/page/site/[^/]+/start-workflow|/page/start-workflow|/page/context/[^/]+/start-workflow
+               </path>
+            </request>
+            <action name="assertReferer">
+               <param name="referer">{referer}</param>
+            </action>
+            <action name="assertOrigin">
+               <param name="origin">{origin}</param>
+            </action>
+         </rule>
+         <rule>
+            <request>
+               <method>POST</method>
+               <path>/page/dologout(\?.+)?</path>
+            </request>
+            <action name="assertReferer">
+               <param name="referer">{referer}</param>
+            </action>
+            <action name="assertOrigin">
+               <param name="origin">{origin}</param>
+            </action>
+            <action name="clearToken">
+               <param name="session">{token}</param>
+               <param name="cookie">{token}</param>
+            </action>
+         </rule>
+         <rule>
+            <request>
+               <session>
+                  <attribute name="_alf_USER_ID">.+</attribute>
+                  <attribute name="{token}" />
+               </session>
+            </request>
+            <action name="generateToken">
+               <param name="session">{token}</param>
+               <param name="cookie">{token}</param>
+            </action>
+         </rule>
+         <rule>
+            <request>
+               <method>GET</method>
+               <path>/page/.*</path>
+               <session>
+                  <attribute name="_alf_USER_ID">.+</attribute>
+                  <attribute name="{token}">.+</attribute>
+               </session>
+            </request>
+            <action name="generateToken">
+               <param name="session">{token}</param>
+               <param name="cookie">{token}</param>
+            </action>
+         </rule>
+         <rule>
+            <request>
+               <method>POST</method>
+               <header name="Content-Type">multipart/.+</header>
+               <session>
+                  <attribute name="_alf_USER_ID">.+</attribute>
+               </session>
+            </request>
+            <action name="assertToken">
+               <param name="session">{token}</param>
+               <param name="parameter">{token}</param>
+            </action>
+            <action name="assertReferer">
+               <param name="referer">{referer}</param>
+            </action>
+            <action name="assertOrigin">
+               <param name="origin">{origin}</param>
+            </action>
+         </rule>
+         <rule>
+            <request>
+               <method>POST|PUT|DELETE</method>
+               <session>
+                  <attribute name="_alf_USER_ID">.+</attribute>
+               </session>
+            </request>
+            <action name="assertToken">
+               <param name="session">{token}</param>
+               <param name="header">{token}</param>
+            </action>
+            <action name="assertReferer">
+               <param name="referer">{referer}</param>
+            </action>
+            <action name="assertOrigin">
+               <param name="origin">{origin}</param>
+            </action>
+         </rule>
+      </filter>
+   </config>
+
+   <config evaluator="string-compare" condition="Replication">
+      <share-urls>
+      </share-urls>
+   </config>
+
+   <config evaluator="string-compare" condition="Remote">
+      <remote>
+         <endpoint>
+            <id>alfresco-noauth</id>
+            <name>Alfresco - unauthenticated access</name>
+            <description>Access to Alfresco Repository WebScripts that do not require authentication</description>
+            <connector-id>alfresco</connector-id>
+            <endpoint-url>http://REPO_HOST:REPO_PORT/alfresco/s</endpoint-url>
+            <identity>none</identity>
+         </endpoint>
+         <endpoint>
+            <id>alfresco</id>
+            <name>Alfresco - user access</name>
+            <description>Access to Alfresco Repository WebScripts that require user authentication</description>
+            <connector-id>alfresco</connector-id>
+            <endpoint-url>http://REPO_HOST:REPO_PORT/alfresco/s</endpoint-url>
+            <identity>user</identity>
+         </endpoint>
+         <endpoint>
+            <id>alfresco-feed</id>
+            <name>Alfresco Feed</name>
+            <description>Alfresco Feed - supports basic HTTP authentication via the EndPointProxyServlet</description>
+            <connector-id>http</connector-id>
+            <endpoint-url>http://REPO_HOST:REPO_PORT/alfresco/s</endpoint-url>
+            <basic-auth>true</basic-auth>
+            <identity>user</identity>
+         </endpoint>
+         <endpoint>
+            <id>alfresco-api</id>
+            <parent-id>alfresco</parent-id>
+            <name>Alfresco Public API - user access</name>
+            <description>Access to Alfresco Repository Public API that require user authentication.</description>
+            <connector-id>alfresco</connector-id>
+            <endpoint-url>http://REPO_HOST:REPO_PORT/alfresco/api</endpoint-url>
+            <identity>user</identity>
+         </endpoint>
+         <endpoint>
+            <id>alfresco-admin-register</id>
+            <name>Alfresco Admin - Self Registration</name>
+            <description>Server-side admin endpoint used only for the self-registration form.</description>
+            <connector-id>http</connector-id>
+            <endpoint-url>http://REPO_HOST:REPO_PORT/alfresco/api</endpoint-url>
+            <identity>declared</identity>
+            <username>admin</username>
+            <password>admin</password>
+            <external-auth>false</external-auth>
+         </endpoint>
+         <endpoint>
+            <id>alfresco-admin-service</id>
+            <name>Alfresco Admin - Service Webscripts</name>
+            <description>Server-side admin endpoint for custom repository webscripts.</description>
+            <connector-id>http</connector-id>
+            <endpoint-url>http://REPO_HOST:REPO_PORT/alfresco/s</endpoint-url>
+            <identity>declared</identity>
+            <username>admin</username>
+            <password>admin</password>
+            <external-auth>false</external-auth>
+         </endpoint>
+      </remote>
+   </config>
+
+   <config evaluator="string-compare" condition="Users" replace="true">
+      <users>
+         <username-min-length>2</username-min-length>
+         <password-min-length>8</password-min-length>
+         <show-authorization-status>false</show-authorization-status>
+      </users>
+      <enable-external-users-panel>false</enable-external-users-panel>
+   </config>
+
+</alfresco-config>
