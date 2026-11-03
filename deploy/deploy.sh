@@ -74,9 +74,8 @@ case "$command" in
 
    full-deploy)
       echo "=== Déploiement complet (build + start) ==="
-      SCRIPT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
-      bash "$SCRIPT" build
-      bash "$SCRIPT" start
+      bash "$REPO_DIR/deploy/deploy.sh" build
+      bash "$REPO_DIR/deploy/deploy.sh" start
       ;;
 
    *)
