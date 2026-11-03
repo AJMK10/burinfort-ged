@@ -56,7 +56,7 @@ case "$command" in
    update)
       echo "=== Mise à jour depuis Git ==="
       cd "$REPO_DIR"
-      git pull origin main
+      git pull origin master
       cd "$SHARE_DIR"
       docker build -t alfresco-share-bordeaux:latest .
       cd "$COMPOSE_DIR"
