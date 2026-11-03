@@ -6,7 +6,7 @@
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-COMPOSE_DIR="$REPO_DIR/acs-deployment/docker-compose"
+COMPOSE_DIR="$REPO_DIR/compose"
 SHARE_DIR="$REPO_DIR/share-theme"
 COMPOSE_FILES="-f community-compose.yaml -f prod-override.yaml"
 
