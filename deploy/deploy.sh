@@ -78,6 +78,31 @@ case "$command" in
       bash "$REPO_DIR/deploy/deploy.sh" start
       ;;
 
+   local-start)
+      echo "=== Démarrage local (dev) ==="
+      cd "$SHARE_DIR"
+      docker build -t alfresco-share-bordeaux:latest .
+      cd "$COMPOSE_DIR"
+      docker compose -f community-compose.yaml -f local-override.yaml up -d
+      echo ""
+      echo "✓ Stack locale démarrée."
+      echo "  ACS disponible dans ~2-3 min sur http://localhost:8085/share"
+      ;;
+
+   local-stop)
+      echo "=== Arrêt de la stack locale ==="
+      docker compose -f community-compose.yaml -f local-override.yaml down
+      ;;
+
+   local-update)
+      echo "=== Mise à jour locale (rebuild Share) ==="
+      cd "$SHARE_DIR"
+      docker build -t alfresco-share-bordeaux:latest .
+      cd "$COMPOSE_DIR"
+      docker compose -f community-compose.yaml -f local-override.yaml up -d --no-deps --force-recreate share
+      echo "✓ Share local mis à jour"
+      ;;
+
    *)
       echo "Usage : bash deploy.sh <commande>"
       echo ""
