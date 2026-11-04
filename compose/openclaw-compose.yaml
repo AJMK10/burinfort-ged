@@ -1,0 +1,63 @@
+services:
+
+  # ── OpenClaw Gateway ────────────────────────────────────────────────────────
+  # Agent IA local (MIT) — https://github.com/openclaw/openclaw
+  # Accès dashboard : http://localhost:18789
+  openclaw-gateway:
+    image: ${OPENCLAW_IMAGE:-ghcr.io/openclaw/openclaw:latest}
+    container_name: burinfort-openclaw
+    restart: unless-stopped
+    init: true
+    ports:
+      - "${OPENCLAW_GATEWAY_PORT:-18789}:18789"
+      - "${OPENCLAW_BRIDGE_PORT:-18790}:18790"
+    environment:
+      ANTHROPIC_API_KEY:      ${ANTHROPIC_API_KEY}
+      OPENCLAW_GATEWAY_TOKEN: ${OPENCLAW_GATEWAY_TOKEN:-changeme}
+      TZ: Europe/Paris
+    volumes:
+      - openclaw-state:/home/node/.openclaw
+      - ../openclaw-skills:/home/node/.openclaw/workspace/skills:ro
+    command: ["node", "dist/index.js", "gateway", "--bind", "lan", "--port", "18789"]
+    cap_drop:
+      - NET_RAW
+      - NET_ADMIN
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:18789/health 2>/dev/null || exit 0"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # ── BOAMP Cron ──────────────────────────────────────────────────────────────
+  # Récupère les appels d'offres BOAMP toutes les 24h et les archive dans Alfresco
+  boamp-cron:
+    image: python:3.12-slim
+    container_name: burinfort-boamp-cron
+    restart: unless-stopped
+    environment:
+      ALFRESCO_URL:      http://host.docker.internal:${APP_HOST_PORT:-8085}/alfresco
+      ALFRESCO_USER:     admin
+      ALFRESCO_PASS:     ${ALFRESCO_ADMIN_PASSWORD:-admin}
+      BOAMP_KEYWORDS:    "informatique OR logiciel OR GED OR numérique OR DSI"
+      BOAMP_ROWS:        "20"
+      AUTO_ARCHIVE:      "true"
+    volumes:
+      - ../openclaw-skills:/skills:ro
+    command: >
+      sh -c "echo 'BOAMP Cron démarré — exécution toutes les 24h' &&
+             while true; do
+               echo \"[$(date '+%Y-%m-%d %H:%M')] Exécution fetch-boamp.py\" &&
+               python /skills/fetch-boamp.py ;
+               sleep 86400;
+             done"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  openclaw-state:
+    name: burinfort-ged-openclaw-state

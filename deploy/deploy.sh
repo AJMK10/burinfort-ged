@@ -103,6 +103,31 @@ case "$command" in
       echo "✓ Share local mis à jour"
       ;;
 
+   openclaw-start)
+      echo "=== Démarrage OpenClaw + BOAMP Cron ==="
+      cd "$COMPOSE_DIR"
+      docker compose --env-file "$REPO_DIR/.env" -f openclaw-compose.yaml up -d
+      echo ""
+      echo "✓ OpenClaw Gateway  : http://localhost:18789"
+      echo "✓ BOAMP Cron        : archivage automatique toutes les 24h"
+      ;;
+
+   openclaw-stop)
+      echo "=== Arrêt OpenClaw ==="
+      cd "$COMPOSE_DIR"
+      docker compose -f openclaw-compose.yaml down
+      ;;
+
+   openclaw-status)
+      cd "$COMPOSE_DIR"
+      docker compose -f openclaw-compose.yaml ps
+      ;;
+
+   openclaw-logs)
+      cd "$COMPOSE_DIR"
+      docker compose -f openclaw-compose.yaml logs -f --tail=100 "${2:-}"
+      ;;
+
    *)
       echo "Usage : bash deploy.sh <commande>"
       echo ""
@@ -114,5 +139,10 @@ case "$command" in
       echo "  logs [svc]    Voir les logs (optionnel: nom du service)"
       echo "  status        État des containers"
       echo "  full-deploy   Build + Start en une commande"
+      echo ""
+      echo "  openclaw-start   Démarrer OpenClaw Gateway + BOAMP Cron"
+      echo "  openclaw-stop    Arrêter OpenClaw"
+      echo "  openclaw-status  État des services OpenClaw"
+      echo "  openclaw-logs    Logs OpenClaw en temps réel"
       ;;
 esac

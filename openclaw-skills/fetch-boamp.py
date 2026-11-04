@@ -209,7 +209,11 @@ def main():
     print()
 
     # 3. Archiver dans Alfresco (optionnel)
-    archive = input("Archiver dans Alfresco GED ? [o/N] ").strip().lower()
+    auto = os.environ.get("AUTO_ARCHIVE", "").lower() == "true"
+    if auto:
+        archive = "o"
+    else:
+        archive = input("Archiver dans Alfresco GED ? [o/N] ").strip().lower()
     if archive != "o":
         print("Archivage ignoré.")
         return
