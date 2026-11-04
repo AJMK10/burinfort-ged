@@ -1,0 +1,8 @@
+<webscript>
+  <shortname>BOAMP Proxy</shortname>
+  <description>Proxy vers l'API BOAMP OpenDataSoft — appels d'offres (q, rows)</description>
+  <url>/burinfort/appels-offres/boamp?q={q?}&amp;rows={rows?}</url>
+  <format default="json" />
+  <authentication>user</authentication>
+  <transaction>none</transaction>
+</webscript>

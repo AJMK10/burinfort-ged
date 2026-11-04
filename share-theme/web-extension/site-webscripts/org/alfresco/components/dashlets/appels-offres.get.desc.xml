@@ -1,0 +1,9 @@
+<webscript>
+   <shortname>Appels d'offres — Informatique</shortname>
+   <description>Tableau de bord de veille des appels d'offres publics (BOAMP) secteur informatique/DSI.</description>
+   <url>/components/dashlets/appels-offres</url>
+   <format default="html" />
+   <authentication>user</authentication>
+   <transaction>none</transaction>
+   <family>user-dashlet</family>
+</webscript>

@@ -92,3 +92,80 @@ button.buri-btn:hover,
    background: #fff !important;
    padding: 8px !important;
 }
+
+/* ================================================================
+   BURINFORT SA — Dashlet Appels d'offres
+   ================================================================ */
+
+.ao-dashlet .ao-refresh-btn {
+   float: right !important;
+   color: #fff !important;
+   font-size: 1.1rem !important;
+   text-decoration: none !important;
+   margin-top: -2px !important;
+}
+.ao-dashlet .ao-refresh-btn:hover { color: #ffcccc !important; }
+
+.ao-content { padding: 4px 0 !important; }
+
+.ao-summary {
+   font-size: 0.78rem !important;
+   color: #888 !important;
+   padding: 4px 10px 6px !important;
+   border-bottom: 1px solid #f0e0e0 !important;
+}
+
+.ao-list {
+   list-style: none !important;
+   margin: 0 !important;
+   padding: 0 !important;
+   max-height: 340px !important;
+   overflow-y: auto !important;
+}
+
+.ao-item {
+   border-bottom: 1px solid #f5e6e6 !important;
+   padding: 8px 10px !important;
+}
+.ao-item:last-child { border-bottom: none !important; }
+.ao-item:hover { background: #fdf5f5 !important; }
+
+.ao-title {
+   display: block !important;
+   font-size: 0.85rem !important;
+   font-weight: 600 !important;
+   color: #C62828 !important;
+   text-decoration: none !important;
+   margin-bottom: 4px !important;
+   line-height: 1.3 !important;
+}
+.ao-title:hover { text-decoration: underline !important; color: #b71c1c !important; }
+
+.ao-meta { font-size: 0.76rem !important; color: #666 !important; }
+
+.ao-badge {
+   display: inline-block !important;
+   background: #C62828 !important;
+   color: #fff !important;
+   border-radius: 3px !important;
+   padding: 1px 6px !important;
+   font-size: 0.70rem !important;
+   font-weight: 700 !important;
+   margin-right: 4px !important;
+}
+
+.ao-deadline.ao-expired { color: #c62828 !important; font-weight: 700 !important; }
+
+.ao-msg {
+   padding: 16px 10px !important;
+   font-size: 0.85rem !important;
+   color: #888 !important;
+   text-align: center !important;
+}
+.ao-msg.ao-error { color: #c62828 !important; }
+.ao-loading {
+   padding: 16px 10px !important;
+   font-size: 0.85rem !important;
+   color: #888 !important;
+   text-align: center !important;
+}
