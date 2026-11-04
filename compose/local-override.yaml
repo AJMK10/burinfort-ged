@@ -45,6 +45,18 @@ services:
         -Dpeople.create.admin.only=false
         -Dalfresco.authentication.allowGuestLogin=true
 
+  elasticsearch:
+    hostname: elasticsearch
+
+  postgres:
+    hostname: postgres
+
+  activemq:
+    hostname: activemq
+
+  transform-core-aio:
+    hostname: transform-core-aio
+
   proxy:
     ports:
       - "8085:8080"
