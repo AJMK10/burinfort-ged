@@ -20,3 +20,10 @@ Thumbs.db
 
 # aaPanel/server generated
 deploy/*.pid
+
+# Dépôts externes (ne font pas partie du projet)
+acs-deployment/
+alfresco-community-repo/
+aca-custom/
+playwright-tests/
+.omc/
