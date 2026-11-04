@@ -34,29 +34,24 @@ services:
       - "host.docker.internal:host-gateway"
 
   # ── BOAMP Cron ──────────────────────────────────────────────────────────────
-  # Récupère les appels d'offres BOAMP toutes les 24h et les archive dans Alfresco
+  # Récupère et affiche les appels d'offres BOAMP toutes les 24h (sans archivage)
   boamp-cron:
     image: python:3.12-slim
     container_name: burinfort-boamp-cron
     restart: unless-stopped
     environment:
-      ALFRESCO_URL:      http://host.docker.internal:${APP_HOST_PORT:-8085}/alfresco
-      ALFRESCO_USER:     admin
-      ALFRESCO_PASS:     ${ALFRESCO_ADMIN_PASSWORD:-admin}
       BOAMP_KEYWORDS:    "informatique OR logiciel OR GED OR numérique OR DSI"
       BOAMP_ROWS:        "20"
-      AUTO_ARCHIVE:      "true"
+      CRON_MODE:         "true"
     volumes:
       - ../openclaw-skills:/skills:ro
     command: >
-      sh -c "echo 'BOAMP Cron démarré — exécution toutes les 24h' &&
+      sh -c "echo 'BOAMP Cron démarré — affichage toutes les 24h (sans archivage)' &&
              while true; do
-               echo \"[$(date '+%Y-%m-%d %H:%M')] Exécution fetch-boamp.py\" &&
+               echo \"[$(date '+%Y-%m-%d %H:%M')] Récupération des appels d'offres...\" &&
                python /skills/fetch-boamp.py ;
                sleep 86400;
              done"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
 
 volumes:
   openclaw-state:

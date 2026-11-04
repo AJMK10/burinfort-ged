@@ -208,12 +208,20 @@ def main():
         print(f"    {ao['acheteur']} — {ao['url']}")
     print()
 
-    # 3. Archiver dans Alfresco (optionnel)
+    # 3. Archiver dans Alfresco (optionnel — désactivé en mode CRON)
+    cron_mode = os.environ.get("CRON_MODE", "").lower() == "true"
+    if cron_mode:
+        print("Mode affichage uniquement — aucun archivage.")
+        return
+
     auto = os.environ.get("AUTO_ARCHIVE", "").lower() == "true"
     if auto:
         archive = "o"
     else:
-        archive = input("Archiver dans Alfresco GED ? [o/N] ").strip().lower()
+        try:
+            archive = input("Archiver dans Alfresco GED ? [o/N] ").strip().lower()
+        except EOFError:
+            archive = "n"
     if archive != "o":
         print("Archivage ignoré.")
         return
