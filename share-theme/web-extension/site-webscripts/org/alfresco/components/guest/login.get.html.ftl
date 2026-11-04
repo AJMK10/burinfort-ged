@@ -125,8 +125,7 @@
                          placeholder="Votre mot de passe" />
                </div>
 
-               <button type="submit" id="${el}-submit" class="buri-btn"
-                  style="display:block;width:100%;padding:10px;background:#C62828;color:#fff;border:none;border-radius:6px;font-size:0.92rem;font-weight:700;cursor:pointer;margin-top:8px;">
+               <button type="submit" id="${el}-submit" class="buri-btn">
                   Se connecter
                </button>
             </form>
