@@ -28,14 +28,14 @@
       elContent.innerHTML = '<div class="ao-loading">Chargement&hellip;</div>';
 
       var keywords = "informatique OR logiciel OR numerique OR GED";
-      var since    = dateFrom(90);
-      var query    = keywords + " AND dateparution:[" + since + " TO *]";
+      var year     = new Date().getFullYear();
       var url      = "https://boamp-datadila.opendatasoft.com/api/records/1.0/search/"
                    + "?dataset=boamp"
-                   + "&q=" + encodeURIComponent(query)
+                   + "&q=" + encodeURIComponent(keywords)
                    + "&rows=20"
                    + "&sort=-dateparution"
-                   + "&refine.nature=APPEL_OFFRE";
+                   + "&refine.nature=APPEL_OFFRE"
+                   + "&refine.dateparution=" + year;
 
       var xhr = new XMLHttpRequest();
       xhr.open("GET", url, true);
