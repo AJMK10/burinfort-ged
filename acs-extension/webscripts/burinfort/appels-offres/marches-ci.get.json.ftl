@@ -1,1 +1,0 @@
-<#if found?? && found>${cacheContent}<#else>{"generatedAt":"","total":0,"items":[],"error":"Cache non disponible. Lancez le scraper : docker compose -f compose/openclaw-compose.yaml run --rm ci-cron"}</#if>

@@ -108,13 +108,11 @@ case "$command" in
       ;;
 
    openclaw-start)
-      echo "=== Démarrage OpenClaw + BOAMP Cron + Marchés CI Cron ==="
+      echo "=== Démarrage OpenClaw ==="
       cd "$COMPOSE_DIR"
       docker compose --env-file "$REPO_DIR/.env" -f openclaw-compose.yaml up -d
       echo ""
       echo "✓ OpenClaw Gateway  : http://localhost:18789"
-      echo "✓ BOAMP Cron        : affichage toutes les 24h"
-      echo "✓ Marchés CI Cron   : scraping + cache Alfresco toutes les 24h"
       ;;
 
    openclaw-stop)
@@ -145,7 +143,7 @@ case "$command" in
       echo "  status        État des containers"
       echo "  full-deploy   Build + Start en une commande"
       echo ""
-      echo "  openclaw-start   Démarrer OpenClaw Gateway + BOAMP Cron + Marchés CI Cron"
+      echo "  openclaw-start   Démarrer OpenClaw Gateway"
       echo "  openclaw-stop    Arrêter OpenClaw"
       echo "  openclaw-status  État des services OpenClaw"
       echo "  openclaw-logs    Logs OpenClaw en temps réel"
