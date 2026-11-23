@@ -1,6 +1,7 @@
 var firstName = json.optString("firstName", "");
 var userName  = json.optString("userName",  "");
 var email     = json.optString("email",     "");
+var loginUrl  = json.optString("loginUrl",  "");
 
 if (!email || !userName) {
    status.code = 400;
@@ -37,7 +38,7 @@ if (!email || !userName) {
          "Pour l&#39;instant, vous avez acc&#232;s &#224; votre <strong>espace personnel</strong> " +
          "pour stocker vos propres fichiers." +
          "</p>" +
-         "<a href='http://localhost:8085/share/page/type/login' " +
+         "<a href='" + loginUrl + "' " +
          "style='display:inline-block;background:#C62828;color:#ffffff;padding:12px 28px;" +
          "border-radius:6px;text-decoration:none;font-weight:bold;font-size:14px;'>Se connecter</a>" +
          "</div>" +

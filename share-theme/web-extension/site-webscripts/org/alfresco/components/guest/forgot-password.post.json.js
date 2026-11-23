@@ -55,7 +55,8 @@ if (!email || email.length == 0) {
    if (userId) {
       try {
          var token   = genToken(userId);
-         var baseUrl = url.serverPath + url.context;
+         var domain  = java.lang.System.getenv("PUBLIC_DOMAIN");
+         var baseUrl = (domain ? "https://" + domain : url.server) + url.context;
          var resetUrl = baseUrl + "/page/type/reset-password?token=" + token;
 
          var payload = JSON.stringify({

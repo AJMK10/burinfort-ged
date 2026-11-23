@@ -37,10 +37,13 @@ if (!firstName || !lastName || !userName || !email || !password) {
 
       // 2. Send welcome email via ACS mail action (Gmail SMTP, best-effort)
       try {
+         var domain   = java.lang.System.getenv("PUBLIC_DOMAIN");
+         var loginUrl = (domain ? "https://" + domain : url.server) + url.context + "/page/type/login";
          var emailPayload = "{" +
             "\"firstName\":\"" + esc(firstName) + "\"," +
             "\"userName\":\""  + esc(userName)  + "\"," +
-            "\"email\":\""     + esc(email)     + "\"" +
+            "\"email\":\""     + esc(email)     + "\"," +
+            "\"loginUrl\":\""  + esc(loginUrl)  + "\"" +
          "}";
          var emailConnector = remote.connect("alfresco-admin-service");
          emailConnector.post("/burinfort/register/welcome-email", emailPayload, "application/json");

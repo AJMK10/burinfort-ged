@@ -5,6 +5,7 @@ services:
     environment:
       CSRF_FILTER_ORIGIN: https://${PUBLIC_DOMAIN}
       CSRF_FILTER_REFERER: https://${PUBLIC_DOMAIN}/share/.*
+      PUBLIC_DOMAIN: ${PUBLIC_DOMAIN}
       REPO_HOST: alfresco
       REPO_PORT: "8080"
 
