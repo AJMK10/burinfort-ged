@@ -65,7 +65,7 @@ case "$command" in
       curl -sf -o /dev/null -u "admin:${ALFRESCO_ADMIN_PASSWORD:-admin}" -X POST \
          "http://localhost:${APP_HOST_PORT:-8085}/alfresco/service/index?reset=on" \
          && echo "✓ Webscripts Alfresco rechargés" \
-         || echo "⚠ Rechargement des webscripts impossible — lancez : bash deploy.sh restart"
+         || echo "⚠ Rechargement des webscripts impossible — lancez : docker compose $COMPOSE_FILES restart alfresco"
       ;;
 
    logs)
