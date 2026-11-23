@@ -1,1 +1,1 @@
-${jsonResult}
+${jsonResult!"ERROR: jsonResult not set"}

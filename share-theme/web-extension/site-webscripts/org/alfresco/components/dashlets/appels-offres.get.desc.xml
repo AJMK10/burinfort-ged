@@ -1,6 +1,6 @@
 <webscript>
-   <shortname>Appels d'offres — Informatique</shortname>
-   <description>Tableau de bord de veille des appels d'offres publics (BOAMP) secteur informatique/DSI.</description>
+   <shortname>Appels d'offres — Côte d'Ivoire</shortname>
+   <description>Veille des appels d'offres publics ivoiriens (DGMP, ARCOP, ARTCI, ANADER) secteur informatique/DSI.</description>
    <url>/components/dashlets/appels-offres</url>
    <format default="html" />
    <authentication>user</authentication>

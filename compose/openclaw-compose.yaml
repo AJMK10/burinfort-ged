@@ -53,6 +53,43 @@ services:
                sleep 86400;
              done"
 
+  # ── Marchés CI Cron ─────────────────────────────────────────────────────────
+  # Scrape les portails ivoiriens (marchespublics.ci, anrmp.ci) toutes les 24h
+  # et met à jour le cache JSON dans Alfresco GED.
+  ci-cron:
+    image: python:3.12-slim
+    container_name: burinfort-ci-cron
+    restart: unless-stopped
+    environment:
+      ALFRESCO_URL:     "${ALFRESCO_URL:-http://alfresco:8080/alfresco}"
+      ALFRESCO_USER:    "${ALFRESCO_USER:-admin}"
+      ALFRESCO_PASS:    "${ALFRESCO_PASS:-${ALFRESCO_ADMIN_PASSWORD:-admin}}"
+      CI_ROWS:          "30"
+      ANTHROPIC_API_KEY: "${ANTHROPIC_API_KEY:-}"
+      SMTP_HOST:        "${SMTP_HOST:-smtp.gmail.com}"
+      SMTP_PORT:        "${SMTP_PORT:-587}"
+      SMTP_USER:        "${SMTP_USER:-${MAIL_USERNAME:-}}"
+      SMTP_PASS:        "${SMTP_PASS:-${MAIL_PASSWORD:-}}"
+      ALERT_TO:         "${ALERT_TO:-}"
+      ALERT_FROM:       "${ALERT_FROM:-}"
+    volumes:
+      - ../openclaw-skills:/skills:ro
+    networks:
+      - alfresco-net
+    command: >
+      sh -c "pip install --quiet beautifulsoup4 requests pdfminer.six &&
+             echo 'Marchés CI Cron démarré — scraping toutes les 24h' &&
+             while true; do
+               echo \"[$(date '+%Y-%m-%d %H:%M')] Scraping marchés publics CI...\" &&
+               python -I /skills/fetch-ci-marches.py ;
+               sleep 86400;
+             done"
+
 volumes:
   openclaw-state:
     name: burinfort-ged-openclaw-state
+
+networks:
+  alfresco-net:
+    external: true
+    name: compose_default

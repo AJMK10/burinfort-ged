@@ -62,6 +62,10 @@ case "$command" in
       cd "$COMPOSE_DIR"
       docker compose $COMPOSE_FILES up -d --no-deps --force-recreate share
       echo "✓ Mise à jour Share terminée"
+      curl -sf -o /dev/null -u "admin:${ALFRESCO_ADMIN_PASSWORD:-admin}" -X POST \
+         "http://localhost:${APP_HOST_PORT:-8085}/alfresco/service/index?reset=on" \
+         && echo "✓ Webscripts Alfresco rechargés" \
+         || echo "⚠ Rechargement des webscripts impossible — lancez : bash deploy.sh restart"
       ;;
 
    logs)
@@ -104,12 +108,13 @@ case "$command" in
       ;;
 
    openclaw-start)
-      echo "=== Démarrage OpenClaw + BOAMP Cron ==="
+      echo "=== Démarrage OpenClaw + BOAMP Cron + Marchés CI Cron ==="
       cd "$COMPOSE_DIR"
       docker compose --env-file "$REPO_DIR/.env" -f openclaw-compose.yaml up -d
       echo ""
       echo "✓ OpenClaw Gateway  : http://localhost:18789"
-      echo "✓ BOAMP Cron        : archivage automatique toutes les 24h"
+      echo "✓ BOAMP Cron        : affichage toutes les 24h"
+      echo "✓ Marchés CI Cron   : scraping + cache Alfresco toutes les 24h"
       ;;
 
    openclaw-stop)
@@ -140,7 +145,7 @@ case "$command" in
       echo "  status        État des containers"
       echo "  full-deploy   Build + Start en une commande"
       echo ""
-      echo "  openclaw-start   Démarrer OpenClaw Gateway + BOAMP Cron"
+      echo "  openclaw-start   Démarrer OpenClaw Gateway + BOAMP Cron + Marchés CI Cron"
       echo "  openclaw-stop    Arrêter OpenClaw"
       echo "  openclaw-status  État des services OpenClaw"
       echo "  openclaw-logs    Logs OpenClaw en temps réel"

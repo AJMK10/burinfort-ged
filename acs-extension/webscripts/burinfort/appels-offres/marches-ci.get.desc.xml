@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webscript>
+   <shortname>Cache Marchés Publics CI</shortname>
+   <description>Retourne le cache JSON des marchés publics Côte d'Ivoire stocké dans Alfresco</description>
+   <url>/burinfort/appels-offres/marches-ci</url>
+   <format default="json" />
+   <authentication>user</authentication>
+   <transaction>required</transaction>
+</webscript>
