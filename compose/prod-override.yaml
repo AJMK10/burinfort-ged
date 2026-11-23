@@ -1,6 +1,7 @@
 services:
   share:
     image: alfresco-share-bordeaux:latest
+    restart: unless-stopped
     environment:
       CSRF_FILTER_ORIGIN: https://${PUBLIC_DOMAIN}
       CSRF_FILTER_REFERER: https://${PUBLIC_DOMAIN}/share/.*
@@ -8,6 +9,7 @@ services:
       REPO_PORT: "8080"
 
   alfresco:
+    restart: unless-stopped
     depends_on:
       postgres:
         condition: service_healthy
@@ -56,5 +58,23 @@ services:
         -Dmail.from.enabled=true
 
   proxy:
+    restart: unless-stopped
     ports:
       - "${APP_HOST_PORT:-8085}:8080"
+
+  postgres:
+    restart: unless-stopped
+  elasticsearch:
+    restart: unless-stopped
+  kibana:
+    restart: unless-stopped
+  batch-indexing:
+    restart: unless-stopped
+  activemq:
+    restart: unless-stopped
+  transform-core-aio:
+    restart: unless-stopped
+  content-app:
+    restart: unless-stopped
+  control-center:
+    restart: unless-stopped
